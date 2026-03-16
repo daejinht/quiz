@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파인텍 자체 인증 평가 문제</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>파인텍 자체 인증 평가 문제</h1>
+        <p>인적사항 입력 후 문제를 풀어주세요.</p>
+
+        <div class="form-group">
+            <label for="department">소속:</label>
+            <input type="text" id="department" placeholder="회사명 기입">
+        </div>
+
+        <div class="form-group">
+            <label for="username">이름:</label>
+            <input type="text" id="username" placeholder="이름을 입력하세요">
+        </div>
+
+        <div class="form-group">
+            <label for="role">직급/직무:</label>
+            <input type="text" id="role" placeholder="직종 기입">
+        </div>
+
+        <div class="form-group">
+            <label>문제 1. 말비계(우마)에 관한 설명으로 맞지 않은 것은?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="q1" value="낙상경보기 밟고 작업 가능"> 1. 낙상경보기 밟고 작업 가능</label>
+                <label><input type="radio" name="q1" value="1m 이상 시 2인1조 작업"> 2. 1m 이상 시 2인1조 작업</label>
+                <label><input type="radio" name="q1" value="아웃트리거 설치 권고"> 3. 아웃트리거 설치 권고</label>
+                <label><input type="radio" name="q1" value="발판길이 2m이내, 폭 40cm 이상"> 4. 발판길이 2m이내, 폭 40cm 이상</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>문제 2. A/F 오픈 작업 시 주의사항으로 맞지 않은 것은?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="q2" value="A/F 오픈 작업 구역 하부 동시 작업 금지"> 1. A/F 오픈 작업 구역 하부 동시 작업 금지</label>
+                <label><input type="radio" name="q2" value="A/F 오픈 시 5분 이내 작업은 그물망 사용을 안해도 된다."> 2. A/F 오픈 시 5분 이내 작업은 그물망 사용을 안해도 된다.</label>
+                <label><input type="radio" name="q2" value="상,하부 통제원과 안전 구획 상태를 확인한다."> 3. 상,하부 통제원과 안전 구획 상태를 확인한다.</label>
+                <label><input type="radio" name="q2" value="4면 구획 시 라바콘과 걸이대는 파인텍 물품만 사용한다."> 4. 4면 구획 시 라바콘과 걸이대는 파인텍 물품만 사용한다.</label>
+            </div>
+        </div>
+
+         <div class="form-group">
+            <label>문제 3. 청주 Hynix CMS 전화번호를 적으시오.</label>
+            <div class="contact-row">
+                <span class="contact-label">사내 :</span>
+                <input type="text" id="q3_in" placeholder="ex) 1111">
+            </div>
+            
+            <div class="contact-row">
+                <span class="contact-label">사외 :</span>
+                <input type="text" id="q3_out" placeholder="ex) 043-111-1111">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>문제 4. 해당 보호구 사용 시 받아야 하는 인증은?</label>
+            <div class="contact-row">
+                <span class="contact-label">안전모,안전화 :</span>
+                <input type="text" id="q4_helmet" placeholder="">
+            </div>
+            
+            <div class="contact-row">
+                <span class="contact-label">슬링벨트 :</span>
+                <input type="text" id="q4_sling" placeholder="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>문제 5. 용접 작업중 착용 하는 마스크는?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="q5" value="방진 마스크"> 1. 방진 마스크</label>
+                <label><input type="radio" name="q5" value="비말 마스크"> 2. 비말 마스크</label>
+                <label><input type="radio" name="q5" value="방독면"> 3. 방독면</label>
+                <label><input type="radio" name="q5" value="특급 마스크"> 4. 특급 마스크</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>문제 6. 다음 중 보안 주의사항으로 맞지 않은 것은?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="q6" value="Egg, 포켓파이 등 무선기기와 태블릿 PC반입 금지"> 1. Egg, 포켓파이 등 무선기기와 태블릿 PC반입 금지</label>
+                <label><input type="radio" name="q6" value="출문 시 작업에 필요한 도면은 보안점검 대상이 아님"> 2. 출문 시 작업에 필요한 도면은 보안점검 대상이 아님</label>
+                <label><input type="radio" name="q6" value="카메라 사용시 반출입 절차 준수"> 3. 카메라 사용시 반출입 절차 준수</label>
+                <label><input type="radio" name="q6" value="SK하이닉스 반입문서의 반입 도장 확인"> 4. SK하이닉스 반입문서의 반입 도장 확인</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>문제 7. 안전대 걸이지점으로 옳은 것은?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="q7" value="허리보다 높은 지점 체결"> 1. 허리보다 높은 지점 체결</label>
+                <label><input type="radio" name="q7" value="무릎보다 높은 지점 체결"> 2. 무릎보다 높은 지점 체결</label>
+                <label><input type="radio" name="q7" value="발보다 높은 지점 체결"> 3. 발보다 높은 지점 체결</label>
+                <label><input type="radio" name="q7" value="안전고리만 잘걸려있으면 된다"> 4. 안전고리만 잘걸려있으면 된다.</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>문제 8. 안전대 고정점으로 체결 할 수 있는 곳은?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="q8" value="소방배관"> 1. 소방배관</label>
+                <label><input type="radio" name="q8" value="Tray Rung 1개"> 2. Tray Rung 1개</label>
+                <label><input type="radio" name="q8" value="Bus Duct"> 3. Bus Duct</label>
+                <label><input type="radio" name="q8" value="전산볼트 Support"> 4. 전산볼트 Support</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>문제 9. 상부 작업 간 슬링벨트 사용 시 여장길이 제한기준은?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="q9" value="25cm"> 1. 25cm</label>
+                <label><input type="radio" name="q9" value="30cm"> 2. 30cm</label>
+                <label><input type="radio" name="q9" value="35cm"> 3. 35cm</label>
+                <label><input type="radio" name="q9" value="20cm"> 4. 20cm</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>문제 10. 방, 비, 부란 무엇인지 쓰시오.</label>
+            <div class="contact-row">
+                <span class="contact-label">① 방:</span>
+                <input type="text" id="q10_bang" placeholder="">
+            </div>
+            
+            <div class="contact-row">
+                <span class="contact-label">② 비:</span>
+                <input type="text" id="q10_bi" placeholder="">
+            </div>
+
+            <div class="contact-row">
+                <span class="contact-label">③ 부:</span>
+                <input type="text" id="q10_bu" placeholder="">
+            </div>
+        </div>
+
+        <button id="submitBtn">제출하기</button>
+
+        <div id="resultMessage" class="hidden">
+            <h3>제출이 완료되었습니다.</h3>
+            <p style="font-size: 20px; font-weight: bold; color: #d93025; margin-top: 10px;">
+                내 점수: <span id="scoreDisplay">0</span> / 100점
+            </p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
