@@ -81,16 +81,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
             attemptCount++; 
 
-            // 🚀 1. 점수에 상관없이 무조건 구글 시트로 먼저 쏘기!
+            // 🚀 1. 점수에 상관없이 무조건 구글 시트로
             let myUserId = localStorage.getItem('quiz_user_id');
             if (!myUserId) {
               myUserId = 'user_' + Date.now(); 
               localStorage.setItem('quiz_user_id', myUserId);
             }
 
+            // ★ 
             const scriptURL = 'https://script.google.com/macros/s/AKfycbzQ5mARkepT--VNeyELcFJhtRgVj6tf-FQuykVYvAWS_VUaHt0twK12a8ehkwfmTwtj/exec';
 
-            // ★ 여기에 attempt(횟수)가 추가되어 포장됩니다.
+            // 엑셀에 보낼 데이터 (이름, 점수, 아이디, 횟수)
             const resultData = {
               name: username,      
               score: totalScore,   
@@ -98,14 +99,18 @@ document.addEventListener('DOMContentLoaded', function() {
               attempt: attemptCount 
             };
 
+            // 🌟 구글 보안을 무사통과 🌟
             fetch(scriptURL, {
               method: 'POST',
+              headers: {
+                'Content-Type': 'text/plain;charset=utf-8' 
+              },
               body: JSON.stringify(resultData)
             })
             .then(response => console.log("✅ 데이터 전송 완료"))
             .catch(error => console.error("❌ 전송 오류:", error));
 
-            // 🚨 2. 전송해놓고 나서, 80점 미만이면 여기서 멈춤
+            // 🚨 2. 구글로 쏘고 나서, 80점 미만이면 여기서 멈춤 (재응시 처리)
             if (totalScore < 80) {
                 alert(`${username}님, ${attemptCount}번째 시도 점수는 ${totalScore}점입니다.\n80점 미만이므로 재응시해야 합니다.`);
                 return; 
