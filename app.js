@@ -134,16 +134,18 @@ document.addEventListener('DOMContentLoaded', function() {
           userId: myUserId     // 동명이인 분류 꼬리표
         };
 
-        // 4. 구글 시트로 데이터 전
+        // 4. 구글 시트로 데이터 전송
         fetch(scriptURL, {
           method: 'POST',
+          mode: 'no-cors', // 구글 보안(CORS) 에러를 무시!
           headers: {
-            'Content-Type': 'text/plain;charset=utf-8' // ★ 이 부분이 추가되었습니다!
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify(resultData)
         })
-        .then(response => {
-            console.log("✅ 성공적으로 저장되었습니다!");
-            // 
+        .then(() => {
+            console.log("✅ 성공적으로 전송 요청을 보냈습니다!");
+            // alert("제출이 완료되었습니다.");
         })
-        .catch(error => console.error("❌ 엑셀 저장 중 오류 발생:", error));
+        .catch(error => console.error("❌ 전송 중 오류:", error));
+});
