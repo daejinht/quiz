@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
         q10_bu: "부속의원 내원"            
     };
 
-    // 만약 HTML에서 버튼을 못 찾으면 여기서 멈추게 하는 안전장치
     if (!submitBtn) {
         console.error("❌ 에러: HTML에서 id가 'submitBtn'인 제출 버튼을 찾을 수 없습니다!");
         return;
@@ -30,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     submitBtn.addEventListener('click', function() {
         try {
-            // 1. 이름 입력 확인
             const usernameInput = document.getElementById('username');
             if (!usernameInput) {
                 alert("이름 입력칸을 찾을 수 없습니다. HTML을 확인해주세요.");
@@ -53,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             let totalScore = 0;
 
-            // 2. 📝 채점 시작
             if (getRadioValue('q1') === correctAnswers.q1) totalScore += 10;
             if (getRadioValue('q2') === correctAnswers.q2) totalScore += 10;
             if (getRadioValue('q5') === correctAnswers.q5) totalScore += 10;
@@ -84,13 +81,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
             attemptCount++; 
 
-            // 🚨 80점 미만 재응시 처리
+            // 🚀 1. 점수에 상관없이 무조건 구글 시트로 먼저 쏘기!
+            let myUserId = localStorage.getItem('quiz_user_id');
+            if (!myUserId) {
+              myUserId = 'user_' + Date.now(); 
+              localStorage.setItem('quiz_user_id', myUserId);
+            }
+
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzQ5mARkepT--VNeyELcFJhtRgVj6tf-FQuykVYvAWS_VUaHt0twK12a8ehkwfmTwtj/exec';
+
+            // ★ 여기에 attempt(횟수)가 추가되어 포장됩니다.
+            const resultData = {
+              name: username,      
+              score: totalScore,   
+              userId: myUserId,
+              attempt: attemptCount 
+            };
+
+            fetch(scriptURL, {
+              method: 'POST',
+              body: JSON.stringify(resultData)
+            })
+            .then(response => console.log("✅ 데이터 전송 완료"))
+            .catch(error => console.error("❌ 전송 오류:", error));
+
+            // 🚨 2. 전송해놓고 나서, 80점 미만이면 여기서 멈춤
             if (totalScore < 80) {
                 alert(`${username}님, ${attemptCount}번째 시도 점수는 ${totalScore}점입니다.\n80점 미만이므로 재응시해야 합니다.`);
                 return; 
             }
 
-            // 🏆 80점 이상 합격 시 처리
+            // 🏆 3. 80점 이상 합격 시 화면 처리
             const allInputs = document.querySelectorAll('input');
             allInputs.forEach(input => { input.disabled = true; });
 
@@ -100,35 +121,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (submitBtn) submitBtn.classList.add('hidden');
             if (resultMessage) resultMessage.classList.remove('hidden');
 
-            // --- 🚀 구글 시트 연동 ---
-            let myUserId = localStorage.getItem('quiz_user_id');
-            if (!myUserId) {
-              myUserId = 'user_' + Date.now(); 
-              localStorage.setItem('quiz_user_id', myUserId);
-            }
-
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbzQ5mARkepT--VNeyELcFJhtRgVj6tf-FQuykVYvAWS_VUaHt0twK12a8ehkwfmTwtj/exec';
-
-            const resultData = {
-              name: username,      
-              score: totalScore,   
-              userId: myUserId     
-            };
-
-            // 
-            fetch(scriptURL, {
-              method: 'POST',
-              body: JSON.stringify(resultData)
-            })
-            .then(response => {
-                console.log("✅ 성공적으로 구글로 데이터를 보냈습니다!");
-            })
-            .catch(error => console.error("❌ 엑셀 저장 오류:", error));
-
         } catch (error) {
-            // 경고창 띄우기
             console.error("실행 중 에러 발생:", error);
-            alert("코드 실행 중 알 수 없는 오류가 발생했습니다. 콘솔을 확인해주세요.");
         }
     });
 });
