@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         q6: "출문 시 작업에 필요한 도면은 보안점검 대상이 아님",
         q7: "허리보다 높은 지점 체결",
         q8: "전산볼트 Support",      
-        q9: "30cm",                  
+        q9: "35cm",                  
         q10_bang: "방재실 신고",            
         q10_bi: "비상세척 사용",         
         q10_bu: "부속의원 내원"            
@@ -60,20 +60,31 @@ document.addEventListener('DOMContentLoaded', function() {
             if (getRadioValue('q9') === correctAnswers.q9) totalScore += 10;
 
             const q3InAns = cleanText(document.getElementById('q3_in')?.value || '');
-            const q3OutAns = cleanText(document.getElementById('q3_out')?.value || '');
-            if (q3InAns === cleanText(correctAnswers.q3_in) && q3OutAns === cleanText(correctAnswers.q3_out)) totalScore += 10;
+            const q3OutAns = cleanText(document.getElementById('q3_out')?.value || '').replace(/-/g, '');
+            const keyQ3Out = cleanText(correctAnswers.q3_out).replace(/-/g, ''); 
+            
+            if (q3InAns === cleanText(correctAnswers.q3_in) && q3OutAns === keyQ3Out) {
+                totalScore += 10;
+            }
 
+           
             const q4HelmetAns = cleanText(document.getElementById('q4_helmet')?.value || '');
             const q4SlingAns = cleanText(document.getElementById('q4_sling')?.value || '');
-            if (q4HelmetAns === cleanText(correctAnswers.q4_helmet) && q4SlingAns === cleanText(correctAnswers.q4_sling)) totalScore += 10;
+            const keyQ4Helmet = cleanText(correctAnswers.q4_helmet); 
+            const keyQ4Sling = cleanText(correctAnswers.q4_sling); 
 
+            if (q4HelmetAns.includes(keyQ4Helmet) && q4SlingAns.includes(keyQ4Sling)) {
+                totalScore += 10;
+            }
+
+        
             const q10BangAns = cleanText(document.getElementById('q10_bang')?.value || '');
             const q10BiAns = cleanText(document.getElementById('q10_bi')?.value || '');
             const q10BuAns = cleanText(document.getElementById('q10_bu')?.value || '');
             
-            const keyBang = cleanText(correctAnswers.q10_bang);
-            const keyBi = cleanText(correctAnswers.q10_bi);
-            const keyBu = cleanText(correctAnswers.q10_bu);
+            const keyBang = cleanText(correctAnswers.q10_bang); 
+            const keyBi = cleanText(correctAnswers.q10_bi); 
+            const keyBu = cleanText(correctAnswers.q10_bu); 
 
             if (q10BangAns.includes(keyBang) && q10BiAns.includes(keyBi) && q10BuAns.includes(keyBu)) {
                 totalScore += 10;
@@ -81,17 +92,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
             attemptCount++; 
 
-            // 🚀 1. 점수에 상관없이 무조건 구글 시트로
             let myUserId = localStorage.getItem('quiz_user_id');
             if (!myUserId) {
               myUserId = 'user_' + Date.now(); 
               localStorage.setItem('quiz_user_id', myUserId);
             }
 
-            // ★ 
+    
             const scriptURL = 'https://script.google.com/macros/s/AKfycbzQ5mARkepT--VNeyELcFJhtRgVj6tf-FQuykVYvAWS_VUaHt0twK12a8ehkwfmTwtj/exec';
 
-            // 엑셀에 보낼 데이터 (이름, 점수, 아이디, 횟수)
             const resultData = {
               name: username,      
               score: totalScore,   
@@ -99,7 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
               attempt: attemptCount 
             };
 
-            // 🌟 구글 보안을 무사통과 🌟
             fetch(scriptURL, {
               method: 'POST',
               headers: {
@@ -110,13 +118,11 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => console.log("✅ 데이터 전송 완료"))
             .catch(error => console.error("❌ 전송 오류:", error));
 
-            // 🚨 2. 구글로 쏘고 나서, 80점 미만이면 여기서 멈춤 (재응시 처리)
             if (totalScore < 80) {
                 alert(`${username}님, ${attemptCount}번째 시도 점수는 ${totalScore}점입니다.\n80점 미만이므로 재응시해야 합니다.`);
                 return; 
             }
 
-            // 🏆 3. 80점 이상 합격 시 화면 처리
             const allInputs = document.querySelectorAll('input');
             allInputs.forEach(input => { input.disabled = true; });
 
